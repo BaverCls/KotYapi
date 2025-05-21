@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "İletişim";
+}
+@model Proje.Models.ContactMessage
+
+<div class="d-flex flex-column w-100 min-vh-100">
+    <div class="Contact-top d-flex align-items-center w-100 row m-0">
+        <div class="Contact-top-left col-md-5 p-0">
+            <h1 class="my-5 page-title px-4">İletişim</h1>
+            <p class="fs-5"><i class="bi bi-telephone-fill"></i> Telefon: 0543 376 73 57</p>
+            <p class="fs-5"><i class="bi bi-envelope-fill"></i> E-posta: mahmutcalis@kotyapi.com</p>
+            <p class="fs-5"><i class="bi bi-geo-alt-fill"></i></i> Pınartepe Mah. Kızılay Cad. No:12/A1 Büyükçekmece/İstanbul</p>
+        </div>
+        <div class="Contact-top-right  col-md-7 d-flex p-0 mt-3">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d752.6279105315489!2d28.61680626958078!3d41.01406101013823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDAwJzUwLjYiTiAyOMKwMzcnMDIuOCJF!5e0!3m2!1str!2str!4v1747493268954!5m2!1str!2str" width="650" height="320" style="border:0;" allowfullscreen="" class="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+    <div class="Contact-bottom mt-4 pt-4 ">
+        <h2 class="mb-4">İletişim Formu</h2>
+        <form asp-action="Contact" method="post" class="d-flex flex-column justify-content-center align-items-center">
+            <div class="mb-3 d-flex col-md-12 gap-3">
+                <div class="col-md-3">
+                    <label asp-for="Name" class="form-label">Adınız*</label>
+                    <input asp-for="Name" class="form-control" id="name" placeholder="Adınızı girin" required>
+                </div>
+                <div class="col-md-4">
+                <label asp-for="Email" class="form-label">E-posta</label>
+                <input asp-for="Email" class="form-control" id="email" placeholder="E-posta adresinizi girin">
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Phone" class="form-label">Telefon*</label>
+                    <input asp-for="Phone" class="form-control" id="phone" maxlength="11" placeholder="05xx xxx xx xx" required>
+                </div>
+            </div>
+            <div class="mb-3 d-flex flex-column col-md-12">
+                <label asp-for="Message" class="form-label">Mesajınız*</label>
+                <textarea asp-for="Message" id="message" style="height: 100px;" rows="3" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary msgbtn mb-5">Formu Gönder <span class="material-symbols-outlined fs-6" style="position: relative; top: 3px;">arrow_forward</span></button>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a asp-action="ContactList" asp-controller="Home" class="btn btn-warning msgbtn my-3">Gelen Mesajları Gör <span class="material-symbols-outlined fs-5" style="position: relative; top: 3px;">markunread_mailbox</span></a>
+            }
+        </form>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <script>
+            alert("Mesajınız başarıyla gönderildi.");
+        </script>
+    }
+</div>
